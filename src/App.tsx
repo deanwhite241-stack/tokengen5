@@ -131,6 +131,44 @@ function App() {
     }
   };
 
+  const handleNavigation = (page: string) => {
+    switch (page) {
+      case 'home':
+        setCurrentStep('landing');
+        break;
+      case 'tokens':
+        setCurrentStep('tokens');
+        break;
+      case 'sales':
+        setCurrentStep('sales');
+        break;
+      case 'explore':
+        setCurrentStep('explore');
+        break;
+      case 'liquidity-lock':
+        setCurrentStep('liquidity-lock');
+        break;
+      case 'airdrop':
+        setCurrentStep('airdrop');
+        break;
+      case 'admin':
+        setCurrentStep('admin');
+        break;
+      case 'governance':
+        setCurrentStep('governance');
+        break;
+      case 'proposal':
+        setCurrentStep('proposal');
+        break;
+      case 'manage':
+        setCurrentStep('manage');
+        break;
+      case 'sale':
+        setCurrentStep('sale');
+        break;
+    }
+  };
+
   switch (currentStep) {
     case 'landing':
       return (
@@ -144,6 +182,7 @@ function App() {
           onLiquidityLock={handleLiquidityLock}
           onAirdrop={handleAirdrop}
           onAdminPanel={handleAdminPanel}
+          onNavigate={handleNavigation}
           onAdminPanel={handleAdminPanel}
         />
         <NetworkModeIndicator />
@@ -157,6 +196,7 @@ function App() {
           onBack={goBack}
           onNext={handleTokenConfigComplete}
           initialConfig={tokenConfig || undefined}
+          onNavigate={handleNavigation}
         />
         <NetworkModeIndicator />
         </>
@@ -169,6 +209,7 @@ function App() {
           config={tokenConfig!}
           onBack={goBack}
           onNext={handleVestingComplete}
+          onNavigate={handleNavigation}
         />
         <NetworkModeIndicator />
         </>
@@ -181,6 +222,7 @@ function App() {
           config={tokenConfig!}
           onBack={goBack}
           onDeploy={handleDeploy}
+          onNavigate={handleNavigation}
         />
         <NetworkModeIndicator />
         </>
@@ -193,6 +235,7 @@ function App() {
             result={deploymentResult!}
             deploymentMethod={deploymentMethod}
             onStartNew={handleStartNew}
+            onNavigate={handleNavigation}
           />
           <NetworkModeIndicator />
         </>
@@ -203,6 +246,7 @@ function App() {
         <>
         <PresaleWizard
           onBack={() => setCurrentStep('landing')}
+          onNavigate={handleNavigation}
         />
         <NetworkModeIndicator />
         </>
@@ -211,7 +255,7 @@ function App() {
     case 'sales':
       return (
         <>
-          <MySales />
+          <MySales onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -219,7 +263,7 @@ function App() {
     case 'tokens':
       return (
         <>
-          <DeployedTokens />
+          <DeployedTokens onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -227,7 +271,7 @@ function App() {
     case 'sale':
       return (
         <>
-          <SaleRouter />
+          <SaleRouter onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -235,7 +279,7 @@ function App() {
     case 'explore':
       return (
         <>
-          <SaleExplorer />
+          <SaleExplorer onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -243,7 +287,7 @@ function App() {
     case 'manage':
       return (
         <>
-          <TokenManagement />
+          <TokenManagement onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -251,7 +295,7 @@ function App() {
     case 'liquidity-lock':
       return (
         <>
-          <LiquidityLock />
+          <LiquidityLock onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -259,7 +303,7 @@ function App() {
     case 'airdrop':
       return (
         <>
-          <Airdrop />
+          <Airdrop onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -267,7 +311,7 @@ function App() {
     case 'admin':
       return (
         <>
-          <BadgeManagementPanel />
+          <BadgeManagementPanel onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -275,7 +319,7 @@ function App() {
     case 'governance':
       return (
         <>
-          <GovernanceDashboard />
+          <GovernanceDashboard onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -283,7 +327,7 @@ function App() {
     case 'proposal':
       return (
         <>
-          <ProposalDetail />
+          <ProposalDetail onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -291,7 +335,7 @@ function App() {
     case '404':
       return (
         <>
-          <NotFound />
+          <NotFound onNavigate={handleNavigation} />
           <NetworkModeIndicator />
         </>
       );
@@ -302,7 +346,7 @@ function App() {
       if (!validRoutes.includes(currentStep)) {
         return (
           <>
-            <NotFound />
+            <NotFound onNavigate={handleNavigation} />
             <NetworkModeIndicator />
           </>
         );
@@ -318,6 +362,7 @@ function App() {
             onLiquidityLock={handleLiquidityLock}
             onAirdrop={handleAirdrop}
             onAdminPanel={handleAdminPanel}
+            onNavigate={handleNavigation}
           />
           <NetworkModeIndicator />
           </>
