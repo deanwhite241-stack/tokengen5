@@ -257,6 +257,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               + Additional testnets available for development
             </p>
           </div>
+        </div>
       </section>
 
       {/* Token Features */}
@@ -323,7 +324,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
                 <div className="bg-gradient-to-r from-purple-500/20 to-pink-500/20 rounded-xl p-6 border border-purple-500/30">
                   <h4 className="text-white font-semibold mb-2">Auto Verification</h4>
                   <p className="text-gray-300 text-sm">
-                    Contracts verified on blockchain explorers with trust badges
                     Contracts verified on blockchain explorers with trust badges
                   </p>
                 </div>
