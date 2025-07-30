@@ -68,7 +68,7 @@ export const DeployedTokens: React.FC = () => {
             maxSupply: token.maxSupply || '0',
             decimals: token.decimals || 18,
             transactionHash: token.transactionHash || '',
-            features: token.contractType.includes('Burnable') ? ['Burnable'] : [],
+            features: token.contractType && token.contractType.includes('Burnable') ? ['Burnable'] : [],
             status: 'verified',
             holders: 0, // Will be updated by fetchTokenStatistics
             transfers: 0 // Will be updated by fetchTokenStatistics
