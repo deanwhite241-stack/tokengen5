@@ -16,6 +16,7 @@ services:
       - VITE_BSC_RPC_URL=${BSC_RPC_URL}
       - VITE_POLYGON_RPC_URL=${POLYGON_RPC_URL}
       - VITE_ESR_TOKEN_ADDRESS=${ESR_TOKEN_ADDRESS}
+      - VITE_PROXY_API_TARGET=http://backend:3001
     restart: always
 
   # Backend service
