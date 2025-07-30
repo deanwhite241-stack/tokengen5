@@ -84,24 +84,16 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               onViewSales();
               break;
             case 'explore':
-              {onExploreSales && (
-                onExploreSales();
-              )}
+              onExploreSales?.();
               break;
             case 'liquidity-lock':
-              {onLiquidityLock && (
-                onLiquidityLock();
-              )}
+              onLiquidityLock?.();
               break;
             case 'airdrop':
-              {onAirdrop && (
-                onAirdrop();
-              )}
+              onAirdrop?.();
               break;
             case 'admin':
-              {onAdminPanel && (
-                onAdminPanel();
-              )}
+              onAdminPanel?.();
               break;
           }
         }}
