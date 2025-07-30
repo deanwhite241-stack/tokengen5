@@ -56,8 +56,9 @@ export const DeployedTokens: React.FC = () => {
             symbol: token.symbol,
             contractAddress: token.contractAddress,
             network: networks.find(n => n.id === token.network.id) || networks[0],
-            deploymentDate: new Date(token.timestamp).toISOString(),
-            deploymentDate: new Date(token.timestamp || Date.now()).toISOString(),
+            deploymentDate: token.timestamp && !isNaN(new Date(token.timestamp).getTime()) 
+              ? new Date(token.timestamp).toISOString() 
+              : new Date().toISOString(),
             totalSupply: token.totalSupply || '0',
             maxSupply: token.maxSupply || '0',
             decimals: token.decimals || 18,
