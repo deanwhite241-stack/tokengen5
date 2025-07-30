@@ -183,7 +183,6 @@ function App() {
           onAirdrop={handleAirdrop}
           onAdminPanel={handleAdminPanel}
           onNavigate={handleNavigation}
-          onAdminPanel={handleAdminPanel}
         />
         <NetworkModeIndicator />
         </>
@@ -196,7 +195,6 @@ function App() {
           onBack={goBack}
           onNext={handleTokenConfigComplete}
           initialConfig={tokenConfig || undefined}
-          onNavigate={handleNavigation}
           onNavigate={handleNavigation}
         />
         <NetworkModeIndicator />
@@ -211,7 +209,6 @@ function App() {
           onBack={goBack}
           onNext={handleVestingComplete}
           onNavigate={handleNavigation}
-          onNavigate={handleNavigation}
         />
         <NetworkModeIndicator />
         </>
@@ -224,7 +221,6 @@ function App() {
           config={tokenConfig!}
           onBack={goBack}
           onDeploy={handleDeploy}
-          onNavigate={handleNavigation}
           onNavigate={handleNavigation}
         />
         <NetworkModeIndicator />
@@ -249,7 +245,6 @@ function App() {
         <>
         <PresaleWizard
           onBack={() => setCurrentStep('landing')}
-          onNavigate={handleNavigation}
           onNavigate={handleNavigation}
         />
         <NetworkModeIndicator />
