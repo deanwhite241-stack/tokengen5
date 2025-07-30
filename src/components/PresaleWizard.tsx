@@ -17,7 +17,7 @@ interface PresaleWizardProps {
   onNavigate?: (page: string) => void;
 }
 
-export const PresaleWizard: React.FC<PresaleWizardProps> = ({ onBack }) => {
+export const PresaleWizard: React.FC<PresaleWizardProps> = ({ onBack, onNavigate }) => {
   const [currentStep, setCurrentStep] = useState<PresaleStep>('type');
   const [config, setConfig] = useState<PresaleConfig>({
     saleType: 'presale',
