@@ -27,7 +27,11 @@ interface AirdropRecipient {
   error?: string;
 }
 
-export const Airdrop: React.FC = () => {
+interface AirdropProps {
+  onNavigate?: (page: string) => void;
+}
+
+export const Airdrop: React.FC<AirdropProps> = ({ onNavigate }) => {
   const { isConnected, address } = useWallet();
   const [token, setToken] = useState('');
   const [tokenInfo, setTokenInfo] = useState<{
@@ -393,7 +397,7 @@ export const Airdrop: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <GlobalNavigation currentPage="airdrop" />
+        <GlobalNavigation currentPage="airdrop" onNavigate={onNavigate} />
         
         <div className="mb-8 pt-6">
           <h1 className="text-3xl font-bold text-white mb-2">Token Airdrop</h1>
