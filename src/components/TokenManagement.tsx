@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { useParams, useNavigate } from 'react-router-dom';
 import { 
-  ArrowLeft, 
   Shield, 
   Coins, 
   Flame, 
@@ -255,17 +255,9 @@ export const TokenManagement: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <button
-              onClick={() => navigate('/tokens')}
-              className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span>Back to Tokens</span>
-            </button>
-            <WalletConnection />
-          </div>
+        <GlobalNavigation currentPage="tokens" />
+        
+        <div className="mb-8 pt-6">
           
           <div className="bg-white/5 backdrop-blur-sm rounded-xl p-6 border border-white/10">
             <div className="flex items-start justify-between">

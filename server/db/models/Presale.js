@@ -3,11 +3,8 @@ const { query } = require('../index');
 // Create a new presale
 async function createPresale(presale) {
   const sql = `
-    INSERT INTO presales (
-      contract_address, token_address, owner_address, sale_type, token_info, sale_configuration,
-      vesting_config, wallet_setup, network_id, network_name, network_chain_id, status,
-      transaction_hash, total_raised, participant_count, verified, created_at
-    ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
+    INSERT INTO presales (contract_address, token_address, owner_address, sale_type, token_info, sale_configuration, vesting_config, wallet_setup, network_id, network_name, network_chain_id, status, transaction_hash, total_raised, participant_count, verified, created_at) 
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())
   `;
   await query(sql, [
     presale.contractAddress.toLowerCase(),
@@ -31,31 +28,28 @@ async function createPresale(presale) {
 
 // Find presale by contract address
 async function findPresaleByAddress(address) {
-  const sql = `SELECT * FROM presales WHERE contract_address = ? LIMIT 1`;
+  const sql = 'SELECT * FROM presales WHERE contract_address = ? LIMIT 1';
   const result = await query(sql, [address.toLowerCase()]);
   return result.rows[0] || null;
 }
 
 // Find presales by owner
 async function findPresalesByOwner(owner) {
-  const sql = `SELECT * FROM presales WHERE owner_address = ? ORDER BY created_at DESC`;
+  const sql = 'SELECT * FROM presales WHERE owner_address = ? ORDER BY created_at DESC';
   const result = await query(sql, [owner.toLowerCase()]);
   return result.rows;
 }
 
 // Update presale status
 async function updatePresaleStatus(address, status) {
-  const sql = `UPDATE presales SET status = ? WHERE contract_address = ?`;
+  const sql = 'UPDATE presales SET status = ? WHERE contract_address = ?';
   await query(sql, [status, address.toLowerCase()]);
 }
 
 // Update presale statistics
 async function updatePresaleStats(address, { totalRaised, participantCount }) {
   const sql = `
-    UPDATE presales SET 
-      total_raised = ?, 
-      participant_count = ?, 
-      last_updated = NOW()
+    UPDATE presales SET total_raised = ?, participant_count = ?, last_updated = NOW() 
     WHERE contract_address = ?
   `;
   await query(sql, [totalRaised, participantCount, address.toLowerCase()]);
@@ -63,7 +57,7 @@ async function updatePresaleStats(address, { totalRaised, participantCount }) {
 
 // Update presale verification
 async function setPresaleVerified(address, verified = true) {
-  const sql = `UPDATE presales SET verified = ? WHERE contract_address = ?`;
+  const sql = 'UPDATE presales SET verified = ? WHERE contract_address = ?';
   await query(sql, [verified, address.toLowerCase()]);
 }
 

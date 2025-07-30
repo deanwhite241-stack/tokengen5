@@ -1,5 +1,3 @@
-// All SQL queries  Should now use ? placeholders for MySQL compatibility
-
 const express = require('express');
 const fs = require('fs');
 const path = require('path');
@@ -268,12 +266,7 @@ router.get('/:address/stats', authenticate, async (req, res) => {
       // Update token statistics in database
       try {
         await query(
-          `UPDATE tokens SET 
-           total_supply = ?, 
-           holders_count = ?, 
-           transfer_count = ?, 
-           last_updated = CURRENT_TIMESTAMP 
-           WHERE contract_address = ?`,
+          'UPDATE tokens SET total_supply = ?, holders_count = ?, transfer_count = ?, last_updated = CURRENT_TIMESTAMP WHERE contract_address = ?',
           [
             ethers.formatUnits(totalSupply, decimals),
             uniqueAddresses.size,
@@ -325,10 +318,8 @@ router.get('/presales/public', async (req, res) => {
   try {
     // Get public presales from database
     const presalesResult = await query(
-      `SELECT * FROM presales 
-       WHERE sale_type = 'presale' 
-       ORDER BY created_at DESC`,
-      []
+      'SELECT * FROM presales WHERE sale_type = ? ORDER BY created_at DESC',
+      ['presale']
     );
     
     // Format presales
@@ -441,12 +432,7 @@ router.get('/presale/:address/stats', authenticate, async (req, res) => {
       // Update presale statistics in database
       try {
         await query(
-          `UPDATE presales SET 
-           status = ?, 
-           total_raised = ?, 
-           participant_count = ?, 
-           last_updated = CURRENT_TIMESTAMP 
-           WHERE contract_address = ?`,
+          'UPDATE presales SET status = ?, total_raised = ?, participant_count = ?, last_updated = CURRENT_TIMESTAMP WHERE contract_address = ?',
           [
             status,
             ethers.formatEther(saleStats[0]),
@@ -550,11 +536,7 @@ router.post('/register', authenticate, async (req, res) => {
     
     // Save contract to database
     const result = await query(
-      `INSERT INTO tokens 
-      (contract_address, contract_type, name, symbol, decimals, initial_supply, max_supply, 
-       owner_address, network_id, network_name, network_chain_id, transaction_hash, verified, features, deployment_method) 
-      VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      RETURNING *`,
+      'INSERT INTO tokens (contract_address, contract_type, name, symbol, decimals, initial_supply, max_supply, owner_address, network_id, network_name, network_chain_id, transaction_hash, verified, features, deployment_method) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
       [
         contractAddress.toLowerCase(),
         contractType,
@@ -574,7 +556,10 @@ router.post('/register', authenticate, async (req, res) => {
       ]
     );
     
-    res.status(201).json(result.rows[0]);
+    // For MySQL, we need to fetch the inserted record
+    const insertedRecord = await query('SELECT * FROM tokens WHERE contract_address = ?', [contractAddress.toLowerCase()]);
+    
+    res.status(201).json(insertedRecord.rows[0]);
   } catch (error) {
     console.error('Error registering contract:', error);
     res.status(500).json({ error: 'Failed to register contract', details: error.message });

@@ -1,11 +1,11 @@
 import React, { useState, useCallback, useEffect } from 'react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { 
   Send, 
   Upload, 
   AlertTriangle, 
   CheckCircle, 
   Loader2, 
-  ArrowLeft, 
   Plus, 
   Trash2, 
   Download,
@@ -393,14 +393,9 @@ export const Airdrop: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <button
-            onClick={() => window.location.href = '/'}
-            className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors mb-4"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </button>
+        <GlobalNavigation currentPage="airdrop" />
+        
+        <div className="mb-8 pt-6">
           <h1 className="text-3xl font-bold text-white mb-2">Token Airdrop</h1>
           <p className="text-gray-300">Send tokens to multiple addresses in a single transaction</p>
         </div>

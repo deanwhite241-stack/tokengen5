@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { ArrowLeft, ArrowRight, Info, AlertCircle, Zap } from 'lucide-react';
 import { TokenConfig, Network } from '../types';
 import { networks, mainnets, testnets } from '../data/networks';
@@ -211,14 +212,9 @@ export const TokenBuilder: React.FC<TokenBuilderProps> = ({ onBack, onNext, init
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <button
-            onClick={onBack}
-            className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors mb-6"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </button>
+        <GlobalNavigation currentPage="home" />
+        
+        <div className="mb-8 pt-6">
           
           <h1 className="text-3xl font-bold text-white mb-2">Token Builder</h1>
           <p className="text-gray-300">Configure your token parameters and features</p>
@@ -544,7 +540,7 @@ export const TokenBuilder: React.FC<TokenBuilderProps> = ({ onBack, onNext, init
           <div className="flex justify-between">
             <button
               type="button"
-              onClick={onBack}
+              onClick={() => window.location.href = '/'}
               className="px-6 py-3 text-gray-300 hover:text-white transition-colors"
             >
               Back

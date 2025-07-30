@@ -102,7 +102,7 @@ router.get('/verify', async (req, res) => {
       
       // Check if user exists
       const userResult = await query(
-        'SELECT * FROM users WHERE address = $1',
+        'SELECT * FROM users WHERE address = ?',
         [decoded.address.toLowerCase()]
       );
       
@@ -171,7 +171,7 @@ router.get('/esr/balance/:address', async (req, res) => {
       
       // Store balance in database for future reference
       await query(
-        'UPDATE users SET esr_balance = $1, esr_last_checked = CURRENT_TIMESTAMP WHERE address = $2',
+        'UPDATE users SET esr_balance = ?, esr_last_checked = CURRENT_TIMESTAMP WHERE address = ?',
         [formattedBalance, address.toLowerCase()]
       );
       
@@ -235,7 +235,7 @@ router.post('/esr/deduct', async (req, res) => {
         
         // Record the transaction in the database
         await query(
-          'INSERT INTO transactions (transaction_hash, transaction_type, from_address, to_address, amount, token_address, network_id, status) VALUES ($1, $2, $3, $4, $5, $6, $7, $8)',
+          'INSERT INTO transactions (transaction_hash, transaction_type, from_address, to_address, amount, token_address, network_id, status) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
           [txHash, 'ESR_DEDUCTION', receipt.from.toLowerCase(), PLATFORM_WALLET.toLowerCase(), amount, ESR_TOKEN_ADDRESS, 'ethereum', 'confirmed']
         );
         

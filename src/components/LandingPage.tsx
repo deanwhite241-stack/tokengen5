@@ -1,5 +1,6 @@
 import React from 'react';
 import { ArrowRight, Shield, Globe, CheckCircle, Star, Layers, Zap } from 'lucide-react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { WalletConnection } from './WalletConnection';
 import { useWallet } from '../hooks/useWallet';
 import { NetworkModeToggle } from './NetworkModeToggle';
@@ -69,72 +70,45 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
-      <header className="relative z-10 p-6">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <img 
-              src="/ESTAR_bezfona.png" 
-              alt="ESTAR ECOSYSTEM Logo" 
-              className="w-10 h-10 rounded-lg"
-            />
-            <div>
-              <h1 className="text-2xl font-bold text-white">ESTAR ECOSYSTEM</h1>
-            </div>
-          </div>
-          <div className="flex items-center space-x-4">
-            <nav className="hidden md:flex items-center space-x-6">
-              <button
-                onClick={onViewTokens}
-                className="text-gray-300 hover:text-white transition-colors"
-              >
-                My Tokens
-              </button>
-              <button
-                onClick={onViewSales}
-                className="text-gray-300 hover:text-white transition-colors"
-              >
-                My Sales
-              </button>
+      <GlobalNavigation 
+        currentPage="home"
+        onNavigate={(page) => {
+          switch (page) {
+            case 'home':
+              // Already on home
+              break;
+            case 'tokens':
+              onViewTokens();
+              break;
+            case 'sales':
+              onViewSales();
+              break;
+            case 'explore':
               {onExploreSales && (
-                <button
-                  onClick={onExploreSales}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Explore Sales
-                </button>
+                onExploreSales();
               )}
+              break;
+            case 'liquidity-lock':
               {onLiquidityLock && (
-                <button
-                  onClick={onLiquidityLock}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Liquidity Lock
-                </button>
+                onLiquidityLock();
               )}
+              break;
+            case 'airdrop':
               {onAirdrop && (
-                <button
-                  onClick={onAirdrop}
-                  className="text-gray-300 hover:text-white transition-colors"
-              >
-                Airdrop Tool
-              </button>
+                onAirdrop();
               )}
+              break;
+            case 'admin':
               {onAdminPanel && (
-                <button
-                  onClick={onAdminPanel}
-                  className="text-gray-300 hover:text-white transition-colors"
-                >
-                  Admin Panel
-                </button>
+                onAdminPanel();
               )}
-            </nav>
-            <WalletConnection />
-          </div>
-        </div>
-      </header>
+              break;
+          }
+        }}
+      />
 
       {/* Hero Section */}
-      <section className="relative px-6 py-20">
+      <section className="relative px-6 py-12">
         <div className="max-w-7xl mx-auto">
           <div className="text-center">
             <div className="inline-flex items-center space-x-2 bg-blue-500/20 backdrop-blur-sm text-blue-300 px-4 py-2 rounded-full text-sm font-medium mb-8">
@@ -246,13 +220,13 @@ export const LandingPage: React.FC<LandingPageProps> = ({
       </section>
 
       {/* Networks Section */}
-      <section className="px-6 py-20">
+      <section className="px-6 py-12">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <div className="flex items-center justify-center space-x-3 mb-4">
               <Layers className="w-8 h-8 text-blue-400" />
               <h3 className="text-3xl font-bold text-white">
-                Deploy Across 25+ Networks
+                Deploy Across 12+ Networks
               </h3>
             </div>
             <p className="text-gray-300 text-lg">
@@ -260,107 +234,37 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </p>
           </div>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4">
-            <div className="col-span-full">
-              <div className="overflow-hidden relative">
-                <div className="flex animate-scroll">
-                  {[
-                    // First row - 6 mainnets
-                    { name: 'Ethereum', logo: '🔷' },
-                    { name: 'BSC', logo: '🟡' },
-                    { name: 'Polygon', logo: '🟣' },
-                    { name: 'Arbitrum', logo: '🔵' },
-                    { name: 'Fantom', logo: '🌟' },
-                    { name: 'Avalanche', logo: '🔺' },
-                  ].map((network, index) => (
-                    <div 
-                      key={`row1-${index}`} 
-                      className="flex-shrink-0 w-1/6 p-2"
-                    >
-                      <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center">
-                        <div className="text-2xl mb-2">{network.logo}</div>
-                        <h4 className="text-white font-medium text-sm">{network.name}</h4>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="flex animate-scroll2 mt-4">
-                  {[
-                    // Second row - 6 more mainnets
-                    { name: 'Cronos', logo: '⚡' },
-                    { name: 'Core', logo: '🔘' },
-                    { name: 'DogeChain', logo: '🐕' },
-                    { name: 'PulseChain', logo: '💗' },
-                    { name: 'ZetaChain', logo: '🔗' },
-                    { name: 'Unichain', logo: '🦄' },
-                  ].map((network, index) => (
-                    <div 
-                      key={`row2-${index}`} 
-                      className="flex-shrink-0 w-1/6 p-2"
-                    >
-                      <div className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center">
-                        <div className="text-2xl mb-2">{network.logo}</div>
-                        <h4 className="text-white font-medium text-sm">{network.name}</h4>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="flex animate-scroll3 mt-4">
-                  {[
-                    // Third row - 6 more mainnets
-                    { name: 'Bitrock', logo: '🪨' },
-                    { name: 'AlveyChain', logo: '🧝' },
-                    { name: 'OpenGPU', logo: '🖥️' },
-                    { name: 'Base', logo: '🔵' },
-                    { name: 'ESR', logo: '⚡' },
-                    { name: 'Goerli', logo: '🔷', testnet: true },
-                  ].map((network, index) => (
-                    <div 
-                      key={`row3-${index}`} 
-                      className="flex-shrink-0 w-1/6 p-2"
-                    >
-                      <div className={`bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center ${
-                        network.testnet ? 'border-green-500/20' : ''
-                      }`}>
-                        <div className="text-2xl mb-2">{network.logo}</div>
-                        <h4 className="text-white font-medium text-sm">{network.name}</h4>
-                        {network.testnet && (
-                          <span className="text-xs text-green-400">Testnet</span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
-                
-                <div className="flex animate-scroll4 mt-4">
-                  {[
-                    // Fourth row - 6 testnets
-                    { name: 'BSC Testnet', logo: '🟡', testnet: true },
-                    { name: 'Mumbai', logo: '🟣', testnet: true },
-                    { name: 'Arbitrum Sepolia', logo: '🔵', testnet: true },
-                    { name: 'Fantom Testnet', logo: '🌟', testnet: true },
-                    { name: 'Avalanche Fuji', logo: '🔺', testnet: true },
-                    { name: 'Cronos Testnet', logo: '⚡', testnet: true },
-                  ].map((network, index) => (
-                    <div 
-                      key={`row4-${index}`} 
-                      className="flex-shrink-0 w-1/6 p-2"
-                    >
-                      <div className={`bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center ${
-                        network.testnet ? 'border-green-500/20' : ''
-                      }`}>
-                        <div className="text-2xl mb-2">{network.logo}</div>
-                        <h4 className="text-white font-medium text-sm">{network.name}</h4>
-                        {network.testnet && (
-                          <span className="text-xs text-green-400">Testnet</span>
-                        )}
-                      </div>
-                    </div>
-                  ))}
-                </div>
+          {/* Top 12 Supported Chains - 2 rows of 6 */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-4 max-w-6xl mx-auto">
+            {[
+              { name: 'Ethereum', logo: '🔷' },
+              { name: 'BSC', logo: '🟡' },
+              { name: 'Polygon', logo: '🟣' },
+              { name: 'Arbitrum', logo: '🔵' },
+              { name: 'Fantom', logo: '🌟' },
+              { name: 'Avalanche', logo: '🔺' },
+              { name: 'ESR', logo: '⚡' },
+              { name: 'Base', logo: '🔵' },
+              { name: 'PulseChain', logo: '💗' },
+              { name: 'DogeChain', logo: '🐕' },
+              { name: 'Core', logo: '🔘' },
+              { name: 'ZetaChain', logo: '🔗' }
+            ].map((network, index) => (
+              <div 
+                key={index} 
+                className="bg-white/5 backdrop-blur-sm rounded-xl p-4 border border-white/10 text-center hover:bg-white/10 transition-colors"
+              >
+                <div className="text-3xl mb-2">{network.logo}</div>
+                <h4 className="text-white font-medium text-sm">{network.name}</h4>
               </div>
+            ))}
+          </div>
+          
+          <div className="text-center mt-8">
+            <p className="text-gray-400 text-sm">
+              + Additional testnets available for development
+            </p>
+          </div>
             </div>
           </div>
         </div>

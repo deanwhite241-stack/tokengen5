@@ -1,9 +1,11 @@
 import React from 'react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { Home, Search, ArrowLeft } from 'lucide-react';
 
 export const NotFound: React.FC = () => {
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center p-6">
+      <GlobalNavigation currentPage="home" />
       <div className="bg-white/5 backdrop-blur-sm rounded-xl p-8 border border-white/10 text-center max-w-md">
         <div className="text-9xl font-bold text-white opacity-20 mb-4">404</div>
         <h1 className="text-3xl font-bold text-white mb-4">Page Not Found</h1>

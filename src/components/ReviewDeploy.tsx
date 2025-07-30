@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { ArrowLeft, ArrowRight, CheckCircle, AlertTriangle, Zap, Clock, Shield, Globe } from 'lucide-react';
 import { TokenConfig, DeploymentResult } from '../types';
 import { DeploymentFallback } from './DeploymentFallback';
@@ -206,14 +207,9 @@ export const ReviewDeploy: React.FC<ReviewDeployProps> = ({ config, onBack, onDe
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-4xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <button
-            onClick={onBack}
-            className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors mb-6"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Vesting</span>
-          </button>
+        <GlobalNavigation currentPage="home" />
+        
+        <div className="mb-8 pt-6">
           
           <h1 className="text-3xl font-bold text-white mb-2">Review & Deploy</h1>
           <p className="text-gray-300">Review your token configuration before deployment</p>

@@ -113,10 +113,7 @@ router.post('/token', authenticate, validateTokenConfig, async (req, res) => {
         // Save deployment to database
         try {
           await query(
-            `INSERT INTO tokens 
-            (contract_address, contract_type, name, symbol, decimals, initial_supply, max_supply, 
-             owner_address, network_id, network_name, network_chain_id, transaction_hash, verified, features) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            'INSERT INTO tokens (contract_address, contract_type, name, symbol, decimals, initial_supply, max_supply, owner_address, network_id, network_name, network_chain_id, transaction_hash, verified, features) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
               result.contractAddress.toLowerCase(),
               contractType,
@@ -293,11 +290,7 @@ router.post('/presale', authenticate, validatePresaleConfig, async (req, res) =>
         // Save deployment to database
         try {
           await query(
-            `INSERT INTO presales 
-            (contract_address, token_address, owner_address, sale_type, token_info, 
-             sale_configuration, vesting_config, wallet_setup, network_id, network_name, 
-             network_chain_id, transaction_hash, verified) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
+            'INSERT INTO presales (contract_address, token_address, owner_address, sale_type, token_info, sale_configuration, vesting_config, wallet_setup, network_id, network_name, network_chain_id, transaction_hash, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)',
             [
               result.contractAddress.toLowerCase(),
               presaleConfig.tokenInfo.tokenAddress.toLowerCase(),
@@ -438,10 +431,7 @@ router.post('/governance', authenticate, async (req, res) => {
         // Save deployment to database
         try {
           await query(
-            `INSERT INTO governance_contracts 
-            (contract_address, token_address, owner_address, network_id, network_name, 
-             network_chain_id, transaction_hash, verified) 
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+            'INSERT INTO governance_contracts (contract_address, token_address, owner_address, network_id, network_name, network_chain_id, transaction_hash, verified) VALUES (?, ?, ?, ?, ?, ?, ?, ?)',
             [
               result.contractAddress.toLowerCase(),
               tokenAddress.toLowerCase(),

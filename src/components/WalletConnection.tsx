@@ -1,4 +1,5 @@
 import React from 'react';
+import { useState } from 'react';
 import { Wallet, LogOut, Loader2, AlertCircle, RefreshCw, ArrowRight } from 'lucide-react';
 import { useWallet } from '../hooks/useWallet';
 import { useNetworkMode } from '../hooks/useNetworkMode';
@@ -6,6 +7,7 @@ import { getMainnetChainIds, getTestnetChainIds } from '../config/chainConfig';
 import { NetworkModeToggle } from './NetworkModeToggle';
 
 export const WalletConnection: React.FC = () => {
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const { 
     isConnected, 
     address, 
@@ -47,20 +49,20 @@ export const WalletConnection: React.FC = () => {
 
   if (isConnected) {
     return (
-      <div className="flex items-center space-x-4 flex-wrap">
+      <div className="flex items-center space-x-2 sm:space-x-4 flex-wrap">
         <div className="flex items-center space-x-2">
-          <div className="bg-white/10 backdrop-blur-sm rounded-lg px-4 py-2">
+          <div className="bg-white/10 backdrop-blur-sm rounded-lg px-3 py-2 sm:px-4">
             <div className="flex items-center space-x-2">
               <Wallet className="w-4 h-4 text-blue-300" />
-              <span className="text-sm font-medium text-white">
+              <span className="text-xs sm:text-sm font-medium text-white">
                 {formatAddress(address!)}
               </span>
-              <div className="flex flex-col ml-2">
-                <span className="text-xs text-blue-300">
+              <div className="hidden sm:flex flex-col ml-2">
+                <span className="text-xs text-blue-300 whitespace-nowrap">
                   {balance} {chainId === 25062019 ? 'ESR' : chainId === 56 ? 'BNB' : 'ETH'}
                 </span>
                 {chainId && (
-                  <span className="text-xs text-gray-400">
+                  <span className="text-xs text-gray-400 whitespace-nowrap">
                     {getNetworkName(chainId)}
                   </span>
                 )}
@@ -77,7 +79,7 @@ export const WalletConnection: React.FC = () => {
         {isNetworkMismatch && (
           <button
             onClick={switchToCompatibleNetwork}
-            className="bg-amber-500/20 text-amber-400 px-3 py-1 rounded-lg text-xs font-medium flex items-center space-x-1"
+            className="bg-amber-500/20 text-amber-400 px-2 py-1 sm:px-3 rounded-lg text-xs font-medium flex items-center space-x-1 whitespace-nowrap"
           >
             <span>Switch to {isTestnetMode ? 'Testnet' : 'Mainnet'}</span>
             <ArrowRight className="w-3 h-3" />
@@ -90,7 +92,7 @@ export const WalletConnection: React.FC = () => {
   if (error) {
     return (
       <div className="flex items-center space-x-2">
-        <div className="text-red-400 text-xs mr-2 max-w-[200px] truncate">
+        <div className="text-red-400 text-xs mr-2 max-w-[150px] sm:max-w-[200px] truncate">
           <AlertCircle className="w-4 h-4 inline mr-1" />
           <span>{error.length > 30 ? error.slice(0, 30) + '...' : error}</span>
         </div>
@@ -106,21 +108,23 @@ export const WalletConnection: React.FC = () => {
   }
 
   return (
-    <div className="flex items-center space-x-4">
+    <div className="flex items-center space-x-2 sm:space-x-4">
       <button
         onClick={connectWallet}
         disabled={isConnecting}
-        className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-6 py-2 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 disabled:opacity-50"
+        className="bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 text-white px-4 py-2 sm:px-6 rounded-lg font-medium transition-all duration-200 flex items-center space-x-2 disabled:opacity-50 text-sm sm:text-base"
       >
         {isConnecting ? (
-          <div className="flex items-center space-x-2 px-2">
+          <div className="flex items-center space-x-2">
             <Loader2 className="w-4 h-4 animate-spin" />
-            <span>Connecting...</span>
+            <span className="hidden sm:inline">Connecting...</span>
+            <span className="sm:hidden">...</span>
           </div>
         ) : (
           <div className="flex items-center space-x-2">
             <Wallet className="w-4 h-4" />
-            <span>Connect Wallet</span>
+            <span className="hidden sm:inline">Connect Wallet</span>
+            <span className="sm:hidden">Connect</span>
           </div>
         )}
       </button>

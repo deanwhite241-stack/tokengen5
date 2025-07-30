@@ -37,7 +37,7 @@ function authenticate(req, res, next) {
       
       // Update last activity timestamp in database
       query(
-        'UPDATE users SET last_activity = CURRENT_TIMESTAMP WHERE address = $1',
+        'UPDATE users SET last_activity = CURRENT_TIMESTAMP WHERE address = ?',
         [decoded.address.toLowerCase()]
       ).catch(err => console.error('Error updating user activity:', err));
       
@@ -85,7 +85,7 @@ async function verifySignature(req, res, next) {
     
     // Get user from database
     const userResult = await query(
-      'SELECT * FROM users WHERE address = $1',
+      'SELECT * FROM users WHERE address = ?',
       [address.toLowerCase()]
     );
     
@@ -95,7 +95,7 @@ async function verifySignature(req, res, next) {
       // Create new user if not exists
       const nonce = require('crypto').randomBytes(16).toString('hex');
       await query(
-        'INSERT INTO users (address, nonce) VALUES ($1, $2)',
+        'INSERT INTO users (address, nonce) VALUES (?, ?)',
         [address.toLowerCase(), nonce]
       );
       
@@ -118,7 +118,7 @@ async function verifySignature(req, res, next) {
     
     // Update last login
     await query(
-      'UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE address = $1',
+      'UPDATE users SET last_login = CURRENT_TIMESTAMP WHERE address = ?',
       [address.toLowerCase()]
     );
     
@@ -149,7 +149,7 @@ async function isAdmin(req, res, next) {
     
     // Check if user is in admin_users table
     const adminResult = await query(
-      'SELECT * FROM admin_users WHERE address = $1',
+      'SELECT * FROM admin_users WHERE address = ?',
       [req.user.address.toLowerCase()]
     );
     
@@ -188,7 +188,7 @@ async function isSuperAdmin(req, res, next) {
     
     // Check if user is in admin_users table with super_admin role
     const adminResult = await query(
-      'SELECT * FROM admin_users WHERE address = $1 AND role = $2',
+      'SELECT * FROM admin_users WHERE address = ? AND role = ?',
       [req.user.address.toLowerCase(), 'super_admin']
     );
     

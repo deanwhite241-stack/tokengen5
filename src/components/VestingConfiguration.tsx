@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { ArrowLeft, ArrowRight, Plus, Trash2, Calendar, Clock, Percent } from 'lucide-react';
 import * as LucideIcons from 'lucide-react';
 import { TokenConfig, VestingConfig } from '../types';
@@ -99,14 +100,9 @@ export const VestingConfiguration: React.FC<VestingConfigurationProps> = ({ conf
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <button
-            onClick={onBack}
-            className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors mb-6"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Token Builder</span>
-          </button>
+        <GlobalNavigation currentPage="home" />
+        
+        <div className="mb-8 pt-6">
           
           <h1 className="text-3xl font-bold text-white mb-2">Vesting Configuration</h1>
           <p className="text-gray-300">Configure token vesting schedules for different allocation categories</p>

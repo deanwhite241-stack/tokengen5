@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { GlobalNavigation } from '../GlobalNavigation';
 import { 
   VoteIcon, 
   Clock, 
@@ -9,7 +10,6 @@ import {
   Loader2,
   Calendar,
   Users,
-  ArrowLeft
 } from 'lucide-react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useWallet } from '../../hooks/useWallet';
@@ -161,14 +161,9 @@ export const GovernanceDashboard: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="mb-8">
-          <button
-            onClick={() => window.location.href = '/'}
-            className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors mb-4"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </button>
+        <GlobalNavigation currentPage="home" />
+        
+        <div className="mb-8 pt-6">
           
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
             <div>

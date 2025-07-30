@@ -10,7 +10,7 @@ const pool = mysql.createPool({
   password: process.env.MYSQL_PASSWORD || '',
   database: process.env.MYSQL_DATABASE || 'tokenforge',
   waitForConnections: true,
-  connectionLimit: 10,
+  connectionLimit: 20,
   queueLimit: 0
 });
 
@@ -18,7 +18,7 @@ const pool = mysql.createPool({
 const connectDB = async () => {
   try {
     // Add connection timeout
-    const connectionTimeoutMs = 30000; // 30 seconds
+    const connectionTimeoutMs = 10000; // 10 seconds
     const connectionPromise = pool.getConnection();
     const timeoutPromise = new Promise((_, reject) => {
       setTimeout(() => {
@@ -27,7 +27,7 @@ const connectDB = async () => {
     });
 
     // Test connection
-    const connection = await Promise.race([connectionPromise, timeoutPromise]);
+    const connection = await connectionPromise;
     console.log(`MySQL Connected: ${connection.config.database} on ${connection.config.host}`);
     connection.release();
 
@@ -50,10 +50,7 @@ const connectDB = async () => {
     return pool;
   } catch (error) {
     console.error(`Error connecting to MySQL: ${error.message}`);
-    // Retry logic with exponential backoff
-    const retryDelay = Math.min(30000, Math.pow(2, retryCount) * 1000);
-    console.log(`Retrying connection in ${retryDelay / 1000} seconds...`);
-    setTimeout(() => connectDB(retryCount + 1), retryDelay);
+    throw error;
   }
 };
 
@@ -63,10 +60,10 @@ let retryCount = 0;
 // Initialize database tables if they don't exist
 const initializeDatabase = async () => {
   try {
-    const connection = await pool.getConnection();
+    console.log('Initializing database schema...');
 
     // Read schema file
-    const schemaPath = path.join(__dirname, 'schema.sql');
+    const schemaPath = path.join(__dirname, '..', '..', 'mysql_import.sql');
     if (fs.existsSync(schemaPath)) {
       const schema = fs.readFileSync(schemaPath, 'utf8');
       // Split schema by semicolon to execute multiple statements
@@ -74,16 +71,22 @@ const initializeDatabase = async () => {
         .split(';')
         .map(stmt => stmt.trim())
         .filter(stmt => stmt.length > 0);
+      
+      const connection = await pool.getConnection();
       for (const stmt of statements) {
-        await connection.query(stmt);
+        try {
+          await connection.query(stmt);
+        } catch (error) {
+          console.warn(`Warning executing statement: ${error.message}`);
+        }
       }
+      connection.release();
       console.log('Database schema initialized');
+    } else {
+      console.warn('Schema file not found, skipping initialization');
     }
-
-    connection.release();
   } catch (error) {
     console.error(`Error initializing database: ${error.message}`);
-    throw error;
   }
 };
 
@@ -93,14 +96,14 @@ const query = async (sql, params) => {
   let connection;
   try {
     connection = await pool.getConnection();
-    const [rows, fields] = await connection.query(sql, params);
+    const [rows] = await connection.query(sql, params);
     const duration = Date.now() - start;
     if (process.env.NODE_ENV === 'development') {
-      console.log('Executed query', { sql, duration, rows: Array.isArray(rows) ? rows.length : 0 });
+      console.log('Executed query', { sql: sql.substring(0, 100), duration, rows: Array.isArray(rows) ? rows.length : 0 });
     }
-    return rows;
+    return { rows: Array.isArray(rows) ? rows : [rows] };
   } catch (error) {
-    console.error('Query error', { sql, error });
+    console.error('Query error', { sql: sql.substring(0, 100), error: error.message });
     throw error;
   } finally {
     if (connection) connection.release();

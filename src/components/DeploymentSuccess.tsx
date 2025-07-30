@@ -1,4 +1,5 @@
 import React from 'react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { CheckCircle, ExternalLink, Copy, Share2, Download, RefreshCw, ArrowLeft } from 'lucide-react';
 import { DeploymentResult } from '../types';
 import { TokenMetadataForm } from './TokenMetadataForm';
@@ -106,18 +107,10 @@ export const DeploymentSuccess: React.FC<DeploymentSuccessProps> = ({
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-4xl mx-auto">
         {/* Back to Home Button */}
-        <div className="mb-6">
-          <button
-            onClick={() => window.location.href = '/'}
-            className="flex items-center space-x-2 text-gray-300 hover:text-white transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
-          </button>
-        </div>
+        <GlobalNavigation currentPage="home" />
         
         {/* Success Header */}
-        <div className="text-center mb-8">
+        <div className="text-center mb-8 pt-6">
           <div className="w-20 h-20 bg-gradient-to-r from-green-500 to-blue-600 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="w-10 h-10 text-white" />
           </div>
