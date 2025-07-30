@@ -41,7 +41,7 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({
     navigationItems.push({ id: 'admin', label: 'Admin Panel', icon: Settings, href: '/admin' });
   }
 
-  const handleNavigation = (href: string) => {
+  const handleNavigation = (href: string, id: string) => {
     // Close mobile menu
     setIsMobileMenuOpen(false);
     
