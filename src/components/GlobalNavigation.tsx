@@ -10,7 +10,6 @@ import {
   Search, 
   Lock, 
   Send, 
-  Settings
 } from 'lucide-react';
 import { WalletConnection } from './WalletConnection';
 import { NetworkModeToggle } from './NetworkModeToggle';
@@ -26,7 +25,6 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({
 }) => {
   const { address } = useWallet();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const navigate = useNavigate();
 
   const navigationItems = [
     { id: 'home', label: 'Home', icon: Home, href: '/' },
