@@ -26,10 +26,10 @@ services:
     ports:
       - "3001:3001"
     depends_on:
-      - postgres
+      - mysql
     environment:
       - PORT=3001
-      - DATABASE_URL=postgres://postgres:${POSTGRES_PASSWORD}@postgres:5432/tokenforge
+      - DATABASE_URL=mysql://root:${MYSQL_ROOT_PASSWORD}@mysql:3306/tokenforge
       - JWT_SECRET=${JWT_SECRET}
       - ENCRYPTION_KEY=${ENCRYPTION_KEY}
       - FRONTEND_URL=http://localhost
@@ -49,22 +49,22 @@ services:
     volumes:
       - ./deployments:/app/deployments
 
-  # PostgreSQL for persistent storage
-  postgres:
-    image: postgres:14-alpine
+  # MySQL for persistent storage
+  mysql:
+    image: mysql:8.0
     ports:
-      - "5432:5432"
+      - "3306:3306"
     environment:
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
-      - POSTGRES_DB=tokenforge
+      - MYSQL_ROOT_PASSWORD=${MYSQL_ROOT_PASSWORD}
+      - MYSQL_DATABASE=tokenforge
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - mysql_data:/var/lib/mysql
     restart: always
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U postgres"]
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 10s
       timeout: 5s
       retries: 5
 
 volumes:
-  postgres_data:
+  mysql_data:
