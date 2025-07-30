@@ -9,20 +9,17 @@ import {
   Search, 
   Lock, 
   Send, 
-  Settings,
-  ChevronDown
+  Settings
 } from 'lucide-react';
 import { WalletConnection } from './WalletConnection';
 import { NetworkModeToggle } from './NetworkModeToggle';
 
 interface GlobalNavigationProps {
   currentPage?: string;
-  onNavigate?: (page: string) => void;
 }
 
 export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ 
-  currentPage = 'home',
-  onNavigate 
+  currentPage = 'home'
 }) => {
   const { address } = useWallet();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -42,15 +39,8 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({
     navigationItems.push({ id: 'admin', label: 'Admin Panel', icon: Settings, href: '/admin' });
   }
 
-  const handleNavigation = (item: typeof navigationItems[0]) => {
-    // If onNavigate callback is provided and we're on a specific page, use it
-    if (onNavigate && currentPage !== 'home') {
-      onNavigate(item.id);
-      setIsMobileMenuOpen(false);
-      return;
-    }
-    // Otherwise navigate directly to the href
-    window.location.href = item.href;
+  const handleNavigation = (href: string) => {
+    window.location.href = href;
     setIsMobileMenuOpen(false);
   };
 
@@ -83,7 +73,7 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({
               return (
                 <button
                   key={item.id}
-                  onClick={() => handleNavigation(item)}
+                  onClick={() => handleNavigation(item.href)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-blue-500/20 text-blue-400'
@@ -130,7 +120,7 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({
                 return (
                   <button
                     key={item.id}
-                    onClick={() => handleNavigation(item)}
+                    onClick={() => handleNavigation(item.href)}
                     className={`flex items-center space-x-3 w-full px-3 py-3 rounded-lg text-base font-medium transition-colors ${
                       isActive
                         ? 'bg-blue-500/20 text-blue-400'
