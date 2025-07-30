@@ -123,7 +123,7 @@ export const MySales: React.FC = () => {
             }
             return sale;
           } catch (error) {
-            console.error(`Error fetching stats for sale ${sale.id}:`, error);
+            // Silently handle backend connection errors
             return sale;
           }
         })
