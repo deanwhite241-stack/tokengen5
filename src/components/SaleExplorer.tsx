@@ -104,7 +104,7 @@ export const SaleExplorer: React.FC = () => {
           const metadata = await tokenMetadataService.getTokenMetadata(address);
           return { address, metadata };
         } catch (error) {
-          console.error(`Error fetching metadata for ${address}:`, error);
+          // Silently handle backend connection errors
           return { address, metadata: null };
         }
       });
@@ -121,7 +121,7 @@ export const SaleExplorer: React.FC = () => {
       
       setTokenMetadata(metadataMap);
     } catch (error) {
-      console.error('Error fetching token metadata:', error);
+      // Silently handle backend connection errors
     }
   };
 
@@ -139,7 +139,7 @@ export const SaleExplorer: React.FC = () => {
           const badges = await response.json();
           return { address, badges };
         } catch (error) {
-          console.error(`Error fetching badges for ${address}:`, error);
+          // Silently handle backend connection errors
           return { address, badges: [] };
         }
       });
@@ -154,7 +154,7 @@ export const SaleExplorer: React.FC = () => {
       
       setTokenBadges(badgesMap);
     } catch (error) {
-      console.error('Error fetching token badges:', error);
+      // Silently handle backend connection errors
     }
   };
 

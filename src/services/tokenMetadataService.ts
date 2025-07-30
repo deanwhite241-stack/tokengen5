@@ -39,7 +39,11 @@ class TokenMetadataService {
       
       return await response.json();
     } catch (error) {
-      console.error('Error fetching token metadata:', error);
+      // Handle connection errors gracefully
+      if (error instanceof TypeError && error.message.includes('fetch')) {
+        // Network/connection error - return null instead of throwing
+        return null;
+      }
       throw new AppError('Failed to fetch token metadata', ErrorType.SERVER, error);
     }
   }
