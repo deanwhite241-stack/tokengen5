@@ -14,9 +14,10 @@ interface TokenBuilderProps {
   onNext: (config: TokenConfig) => void;
   initialConfig?: Partial<TokenConfig>;
   onNavigate?: (page: string) => void;
+  onNavigate?: (page: string) => void;
 }
 
-export const TokenBuilder: React.FC<TokenBuilderProps> = ({ onBack, onNext, initialConfig }) => {
+export const TokenBuilder: React.FC<TokenBuilderProps> = ({ onBack, onNext, initialConfig, onNavigate }) => {
   const { isTestnetMode } = useNetworkMode();
   const { chainId, isNetworkMismatch, switchToNetwork, isAttemptingSwitch, switchError, isConnected } = useWallet(); 
   const { toggleMode } = useNetworkMode();
