@@ -15,6 +15,7 @@ interface LandingPageProps {
   onLiquidityLock?: () => void;
   onAirdrop?: () => void;
   onAdminPanel?: () => void;
+  onNavigate?: (page: string) => void;
 }
 
 export const LandingPage: React.FC<LandingPageProps> = ({ 
@@ -25,11 +26,18 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   onExploreSales,
   onLiquidityLock,
   onAirdrop,
-  onAdminPanel
+  onAdminPanel,
+  onNavigate
 }) => {
   const { isConnected } = useWallet();
   
   const handleNavigation = (page: string) => {
+    if (onNavigate) {
+      onNavigate(page);
+      return;
+    }
+    
+    // Fallback to existing handlers
     switch (page) {
       case 'home':
         // Already on home

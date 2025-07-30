@@ -281,7 +281,7 @@ export const DeployedTokens: React.FC = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <GlobalNavigation currentPage="tokens" />
+        <GlobalNavigation currentPage="tokens" onNavigate={onNavigate} />
         
         <div className="mb-8 pt-6">
           <h1 className="text-3xl font-bold text-white mb-2">Deployed Tokens</h1>
