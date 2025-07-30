@@ -21,7 +21,11 @@ import { PresaleConfig } from '../types/presale';
 import { networks } from '../data/networks';
 import { contractService } from '../services/contractService';
 
-export const MySales: React.FC = () => {
+interface MySalesProps {
+  onNavigate?: (page: string) => void;
+}
+
+export const MySales: React.FC<MySalesProps> = ({ onNavigate }) => {
   const [selectedStatus, setSelectedStatus] = useState<'all' | 'upcoming' | 'live' | 'ended'>('all');
   const [searchTerm, setSearchTerm] = useState('');
   const [sortBy, setSortBy] = useState<'date' | 'name' | 'raised'>('date');
