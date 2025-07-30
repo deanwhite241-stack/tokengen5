@@ -228,7 +228,7 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             <div className="flex items-center justify-center space-x-3 mb-4">
               <Layers className="w-8 h-8 text-blue-400" />
               <h3 className="text-3xl font-bold text-white">
-                Deploy Across 12+ Networks
+                Deploy Across 25+ Networks
               </h3>
             </div>
             <p className="text-gray-300 text-lg">
