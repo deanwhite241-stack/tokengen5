@@ -257,9 +257,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
               + Additional testnets available for development
             </p>
           </div>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* Token Features */}
