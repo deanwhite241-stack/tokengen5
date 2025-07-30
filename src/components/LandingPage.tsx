@@ -258,7 +258,6 @@ export const LandingPage: React.FC<LandingPageProps> = ({
             </p>
           </div>
         </div>
-        </div>
       </section>
 
       {/* Token Features */}
