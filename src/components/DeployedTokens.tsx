@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { ExternalLink, Navigation as GlobalNavigation, Copy, Filter, Search, Calendar, Coins, TrendingUp, Eye, Download, ArrowLeft, Link, Twitter, MessageCircle, Settings, VoteIcon } from 'lucide-react';
+import { ExternalLink, Copy, Filter, Search, Calendar, Coins, TrendingUp, Eye, Download, ArrowLeft, Link, Twitter, MessageCircle, Settings, VoteIcon, MoreVertical, Image } from 'lucide-react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { Network } from '../types';
 import { networks } from '../data/networks';
 import { contractService } from '../services/contractService';
@@ -50,12 +51,16 @@ export const DeployedTokens: React.FC = () => {
         
         // Map to DeployedToken interface
         const mappedTokens: DeployedToken[] = tokens.map((token: any, index: number) => {
+          // Safely access network property
+          const tokenNetwork = token.network || {};
+          const networkId = tokenNetwork.id || 'ethereum';
+          
           return {
             id: (index + 1).toString(),
             name: token.name,
             symbol: token.symbol,
             contractAddress: token.contractAddress,
-            network: networks.find(n => n.id === token.network.id) || networks[0],
+            network: networks.find(n => n.id === networkId) || networks[0],
             deploymentDate: token.timestamp && !isNaN(new Date(token.timestamp).getTime()) 
               ? new Date(token.timestamp).toISOString() 
               : new Date().toISOString(),
