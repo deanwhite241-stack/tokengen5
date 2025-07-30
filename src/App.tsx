@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { GlobalNavigation } from './GlobalNavigation';
 import { LandingPage } from './components/LandingPage';
 import { TokenBuilder } from './components/TokenBuilder';
 import { VestingConfiguration } from './components/VestingConfiguration';
@@ -41,6 +42,25 @@ function App() {
   const [tokenConfig, setTokenConfig] = useState<TokenConfig | null>(null);
   const [deploymentResult, setDeploymentResult] = useState<DeploymentResult | null>(null);
   const [deploymentMethod, setDeploymentMethod] = useState<'primary' | 'fallback' | 'emergency'>('primary');
+
+  // Listen for navigation events from GlobalNavigation
+  useEffect(() => {
+    const handleNavigateToTokens = () => {
+      setCurrentStep('tokens');
+    };
+    
+    const handleNavigateToSales = () => {
+      setCurrentStep('sales');
+    };
+    
+    window.addEventListener('navigate-to-tokens', handleNavigateToTokens);
+    window.addEventListener('navigate-to-sales', handleNavigateToSales);
+    
+    return () => {
+      window.removeEventListener('navigate-to-tokens', handleNavigateToTokens);
+      window.removeEventListener('navigate-to-sales', handleNavigateToSales);
+    };
+  }, []);
 
   // Handle network switching when mode changes or wallet connects
   useEffect(() => {
