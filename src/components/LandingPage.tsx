@@ -29,6 +29,32 @@ export const LandingPage: React.FC<LandingPageProps> = ({
 }) => {
   const { isConnected } = useWallet();
   
+  const handleNavigation = (page: string) => {
+    switch (page) {
+      case 'home':
+        // Already on home
+        break;
+      case 'tokens':
+        onViewTokens();
+        break;
+      case 'sales':
+        onViewSales();
+        break;
+      case 'explore':
+        onExploreSales?.();
+        break;
+      case 'liquidity-lock':
+        onLiquidityLock?.();
+        break;
+      case 'airdrop':
+        onAirdrop?.();
+        break;
+      case 'admin':
+        onAdminPanel?.();
+        break;
+    }
+  };
+  
   const features = [
     {
       icon: Zap,
@@ -70,33 +96,9 @@ export const LandingPage: React.FC<LandingPageProps> = ({
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
       {/* Header */}
-      <GlobalNavigation 
+      <GlobalNavigation
         currentPage="home"
-        onNavigate={(page) => {
-          switch (page) {
-            case 'home':
-              // Already on home
-              break;
-            case 'tokens':
-              onViewTokens();
-              break;
-            case 'sales':
-              onViewSales();
-              break;
-            case 'explore':
-              onExploreSales?.();
-              break;
-            case 'liquidity-lock':
-              onLiquidityLock?.();
-              break;
-            case 'airdrop':
-              onAirdrop?.();
-              break;
-            case 'admin':
-              onAdminPanel?.();
-              break;
-          }
-        }}
+        onNavigate={handleNavigation}
       />
 
       {/* Hero Section */}

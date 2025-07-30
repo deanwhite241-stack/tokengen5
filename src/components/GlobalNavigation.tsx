@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useWallet } from '../hooks/useWallet';
 import { 
   Menu, 
@@ -10,6 +9,7 @@ import {
   Search, 
   Lock, 
   Send, 
+  Settings
 } from 'lucide-react';
 import { WalletConnection } from './WalletConnection';
 import { NetworkModeToggle } from './NetworkModeToggle';
@@ -21,7 +21,8 @@ interface GlobalNavigationProps {
 }
 
 export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({ 
-  currentPage = 'home'
+  currentPage = 'home',
+  onNavigate
 }) => {
   const { address } = useWallet();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -41,28 +42,13 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({
     navigationItems.push({ id: 'admin', label: 'Admin Panel', icon: Settings, href: '/admin' });
   }
 
-  const handleNavigation = (href: string, id: string) => {
+  const handleNavigation = (id: string) => {
     // Close mobile menu
     setIsMobileMenuOpen(false);
     
-    // Handle navigation based on the current app structure
-    if (id === 'home') {
-      window.location.href = '/';
-    } else if (id === 'tokens') {
-      window.location.href = '/';
-      // Trigger the view tokens action after a short delay
-      setTimeout(() => {
-        const event = new CustomEvent('navigate-to-tokens');
-        window.dispatchEvent(event);
-      }, 100);
-    } else if (id === 'sales') {
-      window.location.href = '/';
-      setTimeout(() => {
-        const event = new CustomEvent('navigate-to-sales');
-        window.dispatchEvent(event);
-      }, 100);
-    } else {
-      window.location.href = href;
+    // Use the onNavigate callback if provided
+    if (onNavigate) {
+      onNavigate(id);
     }
   };
 
@@ -95,7 +81,7 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({
               return (
                 <button
                   key={item.id}
-                  onClick={() => handleNavigation(item.href, item.id)}
+                  onClick={() => handleNavigation(item.id)}
                   className={`flex items-center space-x-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
                     isActive
                       ? 'bg-blue-500/20 text-blue-400'
@@ -142,7 +128,7 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({
                 return (
                   <button
                     key={item.id}
-                    onClick={() => handleNavigation(item.href, item.id)}
+                    onClick={() => handleNavigation(item.id)}
                     className={`flex items-center space-x-3 w-full px-3 py-3 rounded-lg text-base font-medium transition-colors ${
                       isActive
                         ? 'bg-blue-500/20 text-blue-400'
