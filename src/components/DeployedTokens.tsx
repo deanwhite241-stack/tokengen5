@@ -1,22 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { 
-  ExternalLink, 
-  GlobalNavigation,
-  Copy, 
-  Filter, 
-  Search, 
-  Calendar,
-  Coins,
-  TrendingUp,
-  Eye,
-  Download,
-  ArrowLeft,
-  Link,
-  Twitter,
-  MessageCircle,
-  Settings,
-  VoteIcon
-} from 'lucide-react';
+import { ExternalLink, Navigation as GlobalNavigation, Copy, Filter, Search, Calendar, Coins, TrendingUp, Eye, Download, ArrowLeft, Link, Twitter, MessageCircle, Settings, VoteIcon } from 'lucide-react';
 import { Network } from '../types';
 import { networks } from '../data/networks';
 import { contractService } from '../services/contractService';
