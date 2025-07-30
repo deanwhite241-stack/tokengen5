@@ -11,9 +11,9 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "test:coverage": "jest --coverage",
-    "server": "node server/index.js",
+    "server": "node server/index.cjs",
     "dev:all": "concurrently \"npm run dev\" \"npm run server\"",
-    "start": "node server/index.js",
+    "start": "node server/index.cjs",
     "build:all": "npm run build && npm run server",
     "export-contracts": "node scripts/export-contracts.js"
   },
