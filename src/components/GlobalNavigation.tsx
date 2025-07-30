@@ -43,7 +43,13 @@ export const GlobalNavigation: React.FC<GlobalNavigationProps> = ({
   }
 
   const handleNavigation = (item: typeof navigationItems[0]) => {
-    // Always navigate directly to the href instead of using callback
+    // If onNavigate callback is provided and we're on a specific page, use it
+    if (onNavigate && currentPage !== 'home') {
+      onNavigate(item.id);
+      setIsMobileMenuOpen(false);
+      return;
+    }
+    // Otherwise navigate directly to the href
     window.location.href = item.href;
     setIsMobileMenuOpen(false);
   };
