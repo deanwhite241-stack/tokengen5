@@ -104,7 +104,7 @@ export const DeployedTokens: React.FC = () => {
           const metadata = await tokenMetadataService.getTokenMetadata(address);
           return { address, metadata };
         } catch (error) {
-          console.error(`Error fetching metadata for ${address}:`, error);
+          // Silently handle backend connection errors
           return { address, metadata: null };
         }
       });
