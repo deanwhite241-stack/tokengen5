@@ -18,6 +18,10 @@ import { contractService } from '../services/contractService';
 import { tokenMetadataService } from '../services/tokenMetadataService';
 import { BadgeDisplay, BadgeInfo } from './badges/BadgeDisplay';
 
+interface SaleExplorerProps {
+  onNavigate?: (page: string) => void;
+}
+
 interface PublicSale {
   id: string;
   contractAddress: string;
@@ -36,7 +40,7 @@ interface PublicSale {
   networkSymbol: string;
 }
 
-export const SaleExplorer: React.FC = () => {
+export const SaleExplorer: React.FC<SaleExplorerProps> = ({ onNavigate }) => {
   const [sales, setSales] = useState<PublicSale[]>([]);
   const [filteredSales, setFilteredSales] = useState<PublicSale[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
